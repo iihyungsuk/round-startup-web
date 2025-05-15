@@ -1,95 +1,361 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import Image from "next/image";
-import styles from "./page.module.css";
+
+import hljs from "highlight.js";
+
+import adaptaions_icon from "@/../public/icons/adaptation.svg";
+import flexibility_icon from "@/../public/icons/flexibility.svg";
+import visualization_icon from "@/../public/icons/visualization.svg";
+import logo from "@/../public/logo/logo.svg";
+import sim2real_logo from "@/../public/partners/sim2real.svg";
+import Waitlist from "@/app/components/Waitlist";
+
+import "./dracula.css";
+import "./page.css";
 
 export default function Home() {
-  return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>src/app/page.tsx</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [isWaitlist, setIsWaitlist] = useState(false);
+  const [contactName, setContactName] = useState("");
+  const [contactCompany, setContactCompany] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactMessage, setContactMessage] = useState("");
 
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+  const onChangeContactName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContactName(e.target.value);
+  };
+  const onChangeContactCompany = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContactCompany(e.target.value);
+  };
+  const onChangeContactEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setContactEmail(e.target.value);
+  };
+  const onChangeContactMessage = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
+    setContactMessage(e.target.value);
+  };
+
+  useEffect(() => {
+    hljs.highlightAll();
+  }, []);
+
+  const onSubmitContactForm = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+      console.log({
+        name: contactName,
+        company: contactCompany,
+        email: contactEmail,
+        message: contactMessage,
+      });
+      const response = await fetch("https://round-y.com/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: contactName,
+          company: contactCompany,
+          email: contactEmail,
+          message: contactMessage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+
+      setContactName("");
+      setContactEmail("");
+      setContactCompany("");
+      setContactMessage("");
+    } catch (error) {
+      console.error("Error posting contact information", error);
+    }
+  };
+  return (
+    <div className="main">
+      <div className="main__header white_background">
+        <a className="main__logoLink" href="#starting">
+          <Image
+            src={logo}
+            alt=""
+            // width={100}
+            // height={100}
+          />
+        </a>
+        <div className="main__menus">
+          <a id="menu_starting" href="#starting">
+            <p id="menu_starting" className="main__menu poppins-medium">
+              HOME
+            </p>
           </a>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
+          <a id="menu_features" href="#features">
+            <p id="menu_features" className="main__menu poppins-medium">
+              FEATURES
+            </p>
+          </a>
+          <a id="menu_product" href="#product">
+            <p id="menu_product" className="main__menu poppins-medium">
+              PRODUCT
+            </p>
+          </a>
+          {/* <a href='#partners'><p className='main__menu poppins-medium'>PARTNERS</p></a> */}
+          <a id="menu_contact" href="#contact">
+            <div
+              id="menu_contact"
+              className="main__headerContact main__button blue2_background"
+            >
+              <p id="menu_contact" className="main__menu poppins-medium white">
+                CONTACT
+              </p>
+            </div>
           </a>
         </div>
-      </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+      </div>
+
+      <div className="main__starting" id="starting">
+        <p className="main__startingSlogan suse-bold">
+          Elevate Your Data Pipeline
+          <br />
+          With Intelligent Automation
+        </p>
+        <pre className="main__startingCode dark1_background">
+          <code className="language-python">
+            from round_ai import prepare_dataloader
+          </code>
+          <code className="language-python">
+            {`dataloader = prepare_dataloader("allenai/objaverse-xl")`}
+          </code>
+        </pre>
+        <div
+          id="waitlist_button"
+          onClick={() => setIsWaitlist(true)}
+          className="main__waitlistButton main__button blue2_background"
         >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+          <p id="waitlist_button" className="poppins-medium white">
+            Join Waitlist
+          </p>
+        </div>
+      </div>
+
+      <div
+        className={`main__waitlistBackground ${isWaitlist ? "main__waitlistBackground--show" : "main__waitlistBackground--hide"}`}
+      >
+        <Waitlist setisWaitlist={(x: boolean) => setIsWaitlist(x)} />
+      </div>
+
+      <div className="main__features">
+        <div className="main__feature">
+          <Image src={flexibility_icon} alt="" />
+          <p className="main__featureTitle suse-bold">High Flexibility</p>
+          <p className="main__featureDescription poppins-medium">
+            Edit process however you like
+            <br />
+            whenever you want!
+          </p>
+        </div>
+        <div className="main__feature">
+          <Image src={adaptaions_icon} alt="" />
+          <p className="main__featureTitle suse-bold">Auto-Adaptation</p>
+          <p className="main__featureDescription poppins-medium">
+            {`Import other's module`}
+            <br />
+            without specific changes!
+          </p>
+        </div>
+        <div className="main__feature">
+          <Image src={visualization_icon} alt="" />
+          <p className="main__featureTitle suse-bold">Easy Visualization</p>
+          <p className="main__featureDescription poppins-medium">
+            Monitor the whole process.
+            <br />
+            Manage flow easier!
+          </p>
+        </div>
+      </div>
+
+      <div className="main__featuresContainer dark4_background" id="features">
+        <div className="main__visualization">
+          <div className="main__visualizationTitles">
+            <p className="main__visualizationsubTitle poppins-medium">
+              Monitor data changes throughout your pipeline
+            </p>
+            <p className="main__visualizationTitle suse-bold">
+              Easily Visualize your Data Process
+            </p>
+          </div>
+          <video
+            className="main__visualizationVideo"
+            playsInline
+            autoPlay={true}
+            loop
+            muted
+          >
+            <source src={"/videos/visualization.mp4"} type="video/mp4" />
+          </video>
+        </div>
+
+        <div className="main__multienv">
+          <video
+            className="main__multienvVideo"
+            playsInline
+            autoPlay={true}
+            loop
+            muted
+          >
+            <source src={"/videos/multienv.mp4"} type="video/mp4" />
+          </video>
+          <div className="main__multienvTitles">
+            <p className="main__multienvsubTitle poppins-medium">
+              Resolve compatibility issues with multi environments
+            </p>
+            <p className="main__multienvTitle suse-bold">
+              Set Multi Environments
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="main__body1" id="product">
+        <div className="main__body1Text">
+          <p className="main__body1TextTitle suse-bold">
+            Code Smarter
+            <br />
+            Visualize Faster
+          </p>
+          <div className="main__body1TextSteps">
+            <p className="main__body1TextStep poppins-medium">
+              <span className="blue1">Step 1.</span> Forking
+            </p>
+            <p className="main__body1TextStep poppins-medium">
+              <span className="blue1">Step 2.</span> Customizing
+            </p>
+            <p className="main__body1TextStep poppins-medium">
+              <span className="blue1">Step 3.</span> Debugging
+            </p>
+            <p className="main__body1TextStep poppins-medium">
+              <span className="blue1">Step 4.</span> Uploading
+            </p>
+          </div>
+        </div>
+        <div className="main__body1ContentBoxes">
+          <div className="main__body1ContentBox">
+            <div className="main__body1Content main__body1Content1 dark1_background">
+              <p className="main__body1ContentTitle suse-medium">
+                <span className="blue2">01</span>{" "}
+                <span className="white">Forking</span>
+              </p>
+              <video width="100%" playsInline autoPlay={true} loop muted>
+                <source src={"/videos/forking.mp4"} type="video/mp4" />
+              </video>
+            </div>
+          </div>
+          <div className="main__body1ContentBox">
+            <div className="main__body1Content main__body1Content2 dark2_background">
+              <p className="main__body1ContentTitle suse-medium">
+                <span className="blue2">02</span>{" "}
+                <span className="white">Customizing</span>
+              </p>
+              <video width="100%" playsInline autoPlay={true} loop muted>
+                <source src={"/videos/customizing.mp4"} type="video/mp4" />
+              </video>
+            </div>
+          </div>
+          <div className="main__body1ContentBox">
+            <div className="main__body1Content main__body1Content3 dark3_background">
+              <p className="main__body1ContentTitle suse-medium">
+                <span className="blue2">03</span>{" "}
+                <span className="white">Debugging</span>
+              </p>
+              <video width="100%" playsInline autoPlay={true} loop muted>
+                <source src={"/videos/debugging.mp4"} type="video/mp4" />
+              </video>
+            </div>
+          </div>
+          <div className="main__body1ContentBox">
+            <div className="main__body1Content main__body1Content4 dark4_background">
+              <p className="main__body1ContentTitle suse-medium">
+                <span className="blue2">04</span>{" "}
+                <span className="white">Uploading</span>
+              </p>
+              <video width="100%" playsInline autoPlay={true} loop muted>
+                <source src={"/videos/uploading.mp4"} type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="main__partnersContainer dark4_background" id="partners">
+        <div className="main__partners">
+          <p className="main__partnersTitle suse-bold">Our Partners</p>
+          <div className="main__partnerLogos">
+            <Image src={sim2real_logo} alt="" />
+            {/* <img className='main__partnerLogo' alt='' src={process.env.PUBLIC_URL + '/partners/story.png'}/>
+                    <img className='main__partnerLogo' alt='' src={process.env.PUBLIC_URL + '/partners/vessl.png'}/> */}
+          </div>
+        </div>
+      </div>
+
+      <div className="main__contact" id="contact">
+        <div className="main__contactHeader">
+          <p className="main__contactTitle suse-bold">
+            Contact Us For Enterprise!
+          </p>
+          <p className="main__contactSubtitle poppins-medium">
+            Interested in ROUND Enterprise? Get in touch for detailed
+            information and pricing!
+          </p>
+        </div>
+        <form className="main__contactInputs" onSubmit={onSubmitContactForm}>
+          <input
+            className="poppins-medium dark1_background white"
+            type="text"
+            placeholder="Name"
+            value={contactName}
+            onChange={onChangeContactName}
           />
-          Learn
-        </a>
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
+          <input
+            className="poppins-medium dark1_background white"
+            type="text"
+            placeholder="Company / Position"
+            value={contactCompany}
+            onChange={onChangeContactCompany}
           />
-          Examples
-        </a>
-        <a
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
+          <input
+            className="poppins-medium dark1_background white"
+            type="text"
+            placeholder="Email Address"
+            value={contactEmail}
+            onChange={onChangeContactEmail}
           />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          <textarea
+            className="main__contactMessage poppins-medium dark1_background white"
+            placeholder="Message"
+            value={contactMessage}
+            onChange={onChangeContactMessage}
+          />
+          <input
+            id="contact_button"
+            className="main__contactSubmit main__button poppins-medium blue2_background white"
+            type="submit"
+            value="SUBMIT"
+          />
+        </form>
+      </div>
+
+      <div className="main__footer blue3_background">
+        <p className="poppins-medium blue1">
+          Spend time in valuable research. We will do the annoying part
+        </p>
+      </div>
     </div>
   );
 }
