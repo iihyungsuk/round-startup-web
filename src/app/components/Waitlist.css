@@ -1,3 +1,16 @@
+:root {
+  --dark-bg: #121212;
+  --text-white: #ffffff;
+  --text-gray: #aaaaaa;
+  --accent-blue: #00b0ff; /* 더 쨍한 파란색 */
+  --accent-lightblue: #40c4ff; /* 더 밝고 쨍한 하늘색 */
+  --accent-purple: #7c4dff; /* 더 쨍한 보라색 */
+  --deep-blue: var(
+    --accent-blue
+  ); /* 기존의 진한 파란색 - 사용될 경우를 위해 유지 */
+  --dark1: #2f2f2f;
+}
+
 .waitlist__main--show,
 .waitlist__email--show,
 .waitlist__book--show,
@@ -58,11 +71,11 @@
   justify-content: space-between;
   border-radius: 20px;
   padding: 30px;
-  border: 2px solid #2f2f2f;
+  border: 2px solid var(--dark1);
 }
 
 .waitlistMain__plan--betatest {
-  border: 2px solid #6391c7;
+  border: 2px solid var(--accent-blue);
 }
 
 .waitlistMain__planName {
@@ -311,12 +324,12 @@
     flex-direction: column;
     border-radius: 20px;
     padding: 15px;
-    border: 2px solid #2f2f2f;
+    border: 2px solid var(--dark1);
     gap: 10px;
   }
 
   .waitlistMain__plan--betatest {
-    border: 2px solid #6391c7;
+    border: 2px solid var(--accent-blue);
   }
 
   .waitlistMain__planName {
@@ -522,11 +535,11 @@
   }
 
   .waitlistBook__payButton:hover {
-    background-color: #bad0e9;
+    background-color: var(--accent-lightblue);
     cursor: pointer;
   }
 
   .waitlistBook__payButton:hover > p {
-    color: #2a64a9;
+    color: var(--accent-blue);
   }
 }

@@ -41,6 +41,20 @@ a {
   }
 } */
 
+/* 추가: 색상 변수 정의 (최상단에 추가) */
+:root {
+  --dark-bg: #121212;
+  --text-white: #ffffff;
+  --text-gray: #aaaaaa;
+  --accent-blue: #00b0ff; /* 더 쨍한 파란색 */
+  --accent-lightblue: #40c4ff; /* 더 밝고 쨍한 하늘색 */
+  --accent-purple: #7c4dff; /* 더 쨍한 보라색 */
+  --dark1: #2f2f2f;
+  --dark2: #646464;
+  --dark3: #a0a0a0;
+  --dark4: #d9d9d9;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -219,65 +233,65 @@ code {
 }
 
 .dark1 {
-  color: #2f2f2f;
+  color: var(--dark1);
 }
 
 .dark1_background {
-  background-color: #2f2f2f;
+  background-color: var(--dark1);
 }
 
 .dark2 {
-  color: #646464;
+  color: var(--dark2);
 }
 
 .dark2_background {
-  background-color: #646464;
+  background-color: var(--dark2);
 }
 
 .dark3 {
-  color: #a0a0a0;
+  color: var(--dark3);
 }
 
 .dark3_background {
-  background-color: #a0a0a0;
+  background-color: var(--dark3);
 }
 
 .dark4 {
-  color: #d9d9d9;
+  color: var(--dark4);
 }
 
 .dark4_background {
-  background-color: #d9d9d9;
+  background-color: var(--dark4);
 }
 
 .blue1 {
-  color: #2a64a9;
+  color: var(--accent-blue);
 }
 
 .blue1_background {
-  background-color: #2a64a9;
+  background-color: var(--accent-blue);
 }
 
 .blue2 {
-  color: #6391c7;
+  color: var(--accent-lightblue);
 }
 
 .blue2_background {
-  background-color: #6391c7;
+  background-color: var(--accent-lightblue);
 }
 
 .blue3 {
-  color: #bad0e9;
+  color: var(--accent-purple);
 }
 
 .blue3_background {
-  background-color: #bad0e9;
+  background-color: var(--accent-purple);
 }
 
 .white {
-  color: white;
+  color: var(--text-white);
 }
 
 .white_background {
-  background-color: white;
+  background-color: var(--text-white);
 }
