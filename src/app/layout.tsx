@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, SUSE } from "next/font/google";
 
+import { pretendard } from "@/app/fonts";
+
 // Script import might be unused now, will be removed if no other scripts use it.
 // import Script from "next/script";
 
@@ -40,7 +42,7 @@ export default function RootLayout({
     <html lang="en">
       <head>{/* Manual Google Font links for SUSE are removed */}</head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${suse.variable}`}
+        className={`${geistSans.variable} ${geistMono.variable} ${suse.variable} ${pretendard.variable}`}
       >
         {children}
       </body>
