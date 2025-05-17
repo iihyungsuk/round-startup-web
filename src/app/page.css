@@ -553,12 +553,13 @@
   .main__header {
     position: fixed;
     top: 0;
-    width: 100vw;
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    z-index: 1;
+    padding: 15px;
+    z-index: 10;
+    background-color: var(--dark-bg);
   }
 
   .main__logoLink {
@@ -567,7 +568,7 @@
   }
 
   .main__logoLink img {
-    max-height: 40px;
+    max-height: 50px;
     width: auto;
   }
 
@@ -575,52 +576,89 @@
     display: none;
   }
 
+  .main__contact-button {
+    padding: 8px 20px;
+    border-radius: 40px;
+  }
+
+  .main__contact-button p {
+    font-size: 14px;
+  }
+
+  .main__hero {
+    padding: 150px 20px 60px;
+    min-height: 80vh;
+    text-align: center;
+  }
+
+  .main__hero-content {
+    max-width: 100%;
+    align-items: center;
+  }
+
+  .main__hero-title {
+    font-size: 48px;
+    line-height: 1.2;
+    margin: 0 0 20px 0;
+    text-align: center;
+  }
+
+  .main__hero-subtitle {
+    font-size: 18px;
+    text-align: center;
+    max-width: 100%;
+  }
+
   .main__starting {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 20px;
-    padding-top: 150px;
-    padding-bottom: 100px;
+    gap: 30px;
+    padding-top: 80px;
+    padding-bottom: 80px;
+    width: 90%;
+    margin-top: 70px;
   }
 
   .main__startingSlogan {
-    font-size: 40px;
+    font-size: 32px;
     text-align: center;
   }
 
   .main__startingExplanation {
     text-align: center;
-    line-height: 20px;
-    font-size: 15px;
+    line-height: 24px;
+    font-size: 16px;
   }
 
   .main__startingCode {
-    padding: 5px 10px;
-    border-radius: 20px;
+    padding: 15px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 320px;
+    overflow-x: auto;
   }
 
   .main__startingCode > code {
     background-color: transparent;
     padding: 5px !important;
-    font-size: 12px;
+    font-size: 14px;
+    white-space: pre-wrap;
   }
 
   .main__waitlistButton {
-    padding: 15px 20px;
+    padding: 12px 25px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50px;
-  }
-
-  .main__waitlistButton:hover {
-    cursor: pointer;
+    width: 80%;
+    max-width: 250px;
   }
 
   .main__waitlistButton > p {
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .main__waitlistBackground {
